@@ -7,3 +7,7 @@ https://donjon.bin.sh
 https://donjon.bin.sh/d20/treasure/ 
 
 https://www.d20srd.org/indexes/treasure.htm
+
+boilerplate:
+
+https://github.com/tko22/flask-boilerplate
