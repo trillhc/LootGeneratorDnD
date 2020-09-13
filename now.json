@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "name": "flask-boilerplate",
+  "name": "DnD 3.5 Loot Generator",
   "public": true,
   "type": "docker"
 }
