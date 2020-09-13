@@ -1,4 +1,4 @@
-first thing! checkout development branch and then create your own branch off of it.
+first thing! make sure you are on development branch (made it default) and then create your own branch off of it.
 submit PR of your new branch to development, you can even open it if not ready to be merged yet just to show the difference differences on github. 
 Start issues with WIP: in name in this case
 
