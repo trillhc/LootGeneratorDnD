@@ -1,11 +1,11 @@
 {
-    "name": "Flask Boilerplate",
-    "description": "Simple but opinionated flask boilerplate with Postgres, Docker, and Heroku",
+    "name": "DnD 3.5 Loot Generator",
+    "description": "Generates Loot for DnD 3.5",
     "keywords": [
         "flask",
         "postgresql"
     ],
-    "repository": "https://github.com/tko22/flask-boilerplate",
+    "repository": "https://github.com/trillhc/LootGeneratorDnD",
     "success_url": "/",
     "scripts": {
         "postdeploy": "make heroku_setup"

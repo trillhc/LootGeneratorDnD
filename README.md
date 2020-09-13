@@ -4,11 +4,17 @@ Start issues with WIP: in name in this case
 
 structure:
 in /api
+start in __init__
 views are endpoints that will be called by the api ie. api.dndloot.info/person
 models are database tables, giving name and listing columns
 
-database will be managed separately and connected to on local server for now.
+ignore:
+.idea
+.circleci
+
+database will be managed separately and connected to on local server for now. (not done yet)
 app will be launched with docker-compose.yml file to heroku if possible, otherwise locally.
+review and ask questions about anything docker in this as it is a perfect way to learn how docker works
 
 
 reference material:
