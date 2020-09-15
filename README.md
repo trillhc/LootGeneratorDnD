@@ -29,8 +29,12 @@ virtualenv venv
 #installs everything this project needs, and nothing it doesnt
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
+#create file called creds.ini in the root project dir containing this text:
+[pg_creds]
+pg_url = postgresql://postgres:*****@192.168.1.25:5432/dnd
+#replace stars with supplied password
 
-run debug server to test endpoints:
+Run debug server to test endpoints:
 !!!
 .\venv\Scripts\activate.bat
 python manage.py runserver
