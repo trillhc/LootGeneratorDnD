@@ -12,10 +12,29 @@ ignore:
 .idea
 .circleci
 
+database:
 database will be managed separately and connected to on local server for now. (not done yet)
 app will be launched with docker-compose.yml file to heroku if possible, otherwise locally.
 review and ask questions about anything docker in this as it is a perfect way to learn how docker works
 
+virtual enviroment setup in windows:
+
+#make sure you are in this projects main folder in a cmd terminal and enter call commands
+#if this doesnt work try pip3 install virtualenv and that you have python 3.7+ setup on pc
+pip install virtualenv
+#this creates a folder with a virtual python enviroment in it, you may need to set your ide to use it
+virtualenv venv
+#this activates the venv in your current terminal so you can do things in it
+.\venv\Scripts\activate.bat
+#installs everything this project needs, and nothing it doesnt
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+
+run debug server to test endpoints:
+!!!
+.\venv\Scripts\activate.bat
+python manage.py runserver
+!!!
 
 reference material:
 

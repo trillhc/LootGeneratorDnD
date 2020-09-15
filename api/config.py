@@ -16,7 +16,7 @@ class Config:
 
     # CHANGE SECRET_KEY!! I would use sha256 to generate one and set this as an environment variable
     # Exmaple to retrieve env variable `SECRET_KEY`: os.environ.get("SECRET_KEY")
-    SECRET_KEY = "testkey"
+    SECRET_KEY = "CD77C9CBA6191C11754A0"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_FILE = "api.log"  # where logs are outputted to
 
@@ -29,9 +29,10 @@ class DevelopmentConfig(Config):
     cmd in the setup instructions. You can change this to environment variable as well. 
     """
 
-    url = (
-        "postgresql://testusr:password@127.0.0.1:5432/testdb"
-    )  # set the URI to call get_pg_url() once you have `creds.ini` setup
+    #url = (
+     #   "postgresql://testusr:password@127.0.0.1:5432/testdb"
+    #)  # set the URI to call get_pg_url() once you have `creds.ini` setup
+    url = get_pg_url()
     SQLALCHEMY_DATABASE_URI = url
     DEBUG = True
 
