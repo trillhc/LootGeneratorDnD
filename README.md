@@ -39,6 +39,12 @@ Run debug server to test endpoints:
 .\venv\Scripts\activate.bat
 python manage.py runserver
 !!!
+http://127.0.0.1:5000
+or
+http://0.0.0.0:5000
+
+ex:
+http://127.0.0.1:5000/persons
 
 reference material:
 
