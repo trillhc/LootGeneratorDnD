@@ -3,6 +3,7 @@
 # to prevent circular dependencies
 from .Email import Email
 from .Person import Person
+from .coinGen import CoinGen
 from .base import db
 
 __all__ = ["Email", "Person", "db"]
