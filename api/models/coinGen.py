@@ -7,8 +7,8 @@ class CoinGen(Mixin, db.Model):
 
     id = db.Column(db.Integer, unique=True, primary_key=True)
     level = db.Column(db.Integer, nullable=False)
-    minpercentage = db.Column(db.Integer, nullable=False)
-    maxpercentage = db.Column(db.Integer, nullable=False)
+    minPercentage = db.Column(db.Integer, nullable=False)
+    maxPercentage = db.Column(db.Integer, nullable=False)
     result = db.Column(db.String, nullable=False)
 
 

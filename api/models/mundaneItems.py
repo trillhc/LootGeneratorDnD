@@ -12,10 +12,11 @@ class MundaneItem(Mixin, db.Model):
     itemCostToCreate = db.Column(db.Integer, nullable=False)
     itemCasterLevel = db.Column(db.Integer, nullable=False)
     itemFeatNeeded = db.Column(db.String, nullable=False)
+    itemSpellsNeeded = db.Column(db.String, nullable=False)
     itemLevelRecommended = db.Column(db.Integer, nullable=False)
     itemDescription = db.Column(db.String, nullable=False)
-    minpercentage = db.Column(db.Integer, nullable=False)
-    maxpercentage = db.Column(db.Integer, nullable=False)
+    minPercentage = db.Column(db.Integer, nullable=False)
+    maxPercentage = db.Column(db.Integer, nullable=False)
     result = db.Column(db.String, nullable=False)
 
 
