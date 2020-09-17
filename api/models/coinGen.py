@@ -3,7 +3,6 @@ from .base import db
 
 
 class CoinGen(Mixin, db.Model):
-    """Coin generation Table."""
     __tablename__ = "coingen"
 
     id = db.Column(db.Integer, unique=True, primary_key=True)
@@ -13,8 +12,8 @@ class CoinGen(Mixin, db.Model):
     result = db.Column(db.String, nullable=False)
 
 
-    def __init__(self, name: str):
-        self.name = name
+    def __init__(self, id: str):
+        self.id = id
 
     def __repr__(self):
-        return f"<Person {self.name}>"
+        return f"<id {self.id}>"
