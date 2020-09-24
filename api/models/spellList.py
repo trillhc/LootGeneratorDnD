@@ -15,9 +15,8 @@ class spellList(Mixin, db.Model):
     tertSubSchool = db.Column(db.String, nullable=False)
     bardSpellLevel = db.Column(db.Integer, nullable=False)
     clericSpellLevel = db.Column(db.Integer, nullable=False)
-    #Obviously not correct, using colon as separater, need 2 data types
-    domainSpellLevel = db.Column(db,String : db.Integer, nullable=False) 
-    
+    domainSpellName = db.Column(db.String, nullable=False)
+    domainSpellLevel = db.Column(db.String, nullable=False)
     druidSpellLevel = db.Column(db.Integer, nullable=False)
     paladinSpellLevel = db.Column(db.Integer, nullable=False)
     rangerSpellLevel = db.Column(db.Integer, nullable=False)
