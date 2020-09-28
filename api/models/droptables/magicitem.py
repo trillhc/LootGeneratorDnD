@@ -4,7 +4,7 @@ from .base import db
 
 class MagicItemTable(Mixin, db.Model):
     __tablename__ = "magicitemtable"
-
+# For Rings, Rods, Staves, Wands
     id = db.Column(db.Integer, unique=True, primary_key=True)
     minPercentage = db.Column(db.Integer)
     maxPercentage = db.Column(db.Integer)

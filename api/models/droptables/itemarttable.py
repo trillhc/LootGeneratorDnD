@@ -4,7 +4,7 @@ from .base import db
 
 class ItemArtTable(Mixin, db.Model):
     __tablename__ = "arttable"
-
+# For determining quantities and quality of art items found as part of hoard
 
     id = db.Column(db.Integer, unique=True, primary_key=True)
     encounterLevel = db.Column(db.Integer, nullable=False)

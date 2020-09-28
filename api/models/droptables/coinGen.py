@@ -4,7 +4,7 @@ from .base import db
 
 class CoinGen(Mixin, db.Model):
     __tablename__ = "coingen"
-
+# For determining type and quantity of coinage
     id = db.Column(db.Integer, unique=True, primary_key=True)
     level = db.Column(db.Integer, nullable=False)
     minPercentage = db.Column(db.Integer, nullable=False)
