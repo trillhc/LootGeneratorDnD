@@ -3,9 +3,17 @@
 # to prevent circular dependencies
 from .Email import Email
 from .Person import Person
-from .coinGen import CoinGen
+from .droptables.itemarttable import ItemArtTable
+from .droptables.itemgemtable import ItemGemTable
+from .droptables.itemtypetable import ItemTypeTable
+from .droptables.magicitem import MagicItemTable
+from .droptables.mundaneItems import MundaneItem
+from .droptables.itemgeneration.armortable import ArmorGeneration
+from .droptables.itemgeneration.weapontable import WeaponTable
+from .droptables.coinGen import CoinGen
 from .base import db
 
+#not used
 __all__ = ["Email", "Person", "db"]
 
 # You must import all of the new Models you create to this page
