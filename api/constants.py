@@ -1,11 +1,20 @@
 defaultLootRequest = {
-    "hoards": [{
+    "hoards": [
+{
 "q":      "3",
 "level":	"5",
 "coins":	"1",
 "valuables":	"1",
 "items":	"1",
-    }],
+},
+{
+    "q": "5",
+    "level": "2",
+    "coins": "1",
+    "valuables": "1",
+    "items": "1",
+}
+    ],
 "gem": "1",
 "art":	"1",
 "magic":	"1",

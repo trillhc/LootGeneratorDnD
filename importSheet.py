@@ -3,7 +3,7 @@ import requests
 
 #your spreadsheet key here. I'm using an example from the Victorian election campaign
 
-key = "1tTd8QDp4AT8dEUSKQI8kRXEAn-VeW0eDotUEv2f-n7U"
+key = "1A42jQEc6LetoWlX7QkPQtFegPl4VKwas1eKtHTIcTUQ"
 
 #google api request urls - I'm doing the first one just to get nice key values (there's probably a better way to do this)
 

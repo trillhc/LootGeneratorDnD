@@ -1,22 +1,15 @@
 from flask import Blueprint, request
-import api.functions
+from api.functions import generateLoot
 from api.core import create_response, serialize_list, logger
 from sqlalchemy import inspect
 
 main = Blueprint("main", __name__)  # initialize blueprint
 
-def getCoins():
-    roll = 16
-    q = CoinGen.query.filter(CoinGen.minpercentage<=roll, CoinGen.maxpercentage>=roll).first()
-    print(q.result)
-    return q.result
-
 
 @main.route("/test", methods=["GET"])
 def test():
-    dothis = getCoins()
-    return create_response(data={"coingen": dothis})
-    #return create_response(data={"dothis": dothis})
+    dothis = generateLoot()
+    return create_response(data={"output": dothis})
 
 
 # POST request for generating loot

@@ -1,5 +1,5 @@
 from api.core import Mixin
-from .base import db
+from ..base import db
 
 
 class MundaneItem(Mixin, db.Model):
