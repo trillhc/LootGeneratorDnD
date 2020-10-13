@@ -11,5 +11,5 @@ class ItemArtTable(Mixin, db.Model):
     minPercentage = db.Column(db.Integer, nullable=False)
     maxPercentage = db.Column(db.Integer, nullable=False)
     result = db.Column(db.String, nullable=False)
-    value = db.Column(db.Boolean, nullable=False)
+
     

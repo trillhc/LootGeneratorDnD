@@ -6,6 +6,7 @@ from .Person import Person
 from .droptables.itemarttable import ItemArtTable
 from .droptables.itemgemtable import ItemGemTable
 from .droptables.itemtypetable import ItemTypeTable
+from .droptables.artgemchance import ArtGemChance
 from .droptables.magicitem import MagicItemTable
 from .droptables.mundaneItems import MundaneItem
 from .droptables.itemgeneration.armortable import ArmorGeneration
