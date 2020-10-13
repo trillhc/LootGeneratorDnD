@@ -7,6 +7,7 @@ class MundaneItem(Mixin, db.Model):
 
     id = db.Column(db.Integer, unique=True, primary_key=True)
     itemName = db.Column(db.String, nullable=False)
+    #itemClass is "init" for initial roll then "armor" or "tools" ect.
     itemClass = db.Column(db.String)
     itemCost = db.Column(db.Integer)
     itemCostToCreate = db.Column(db.Integer)

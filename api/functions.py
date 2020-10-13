@@ -22,7 +22,8 @@ def generateLoot(settings=defaultLootRequest):
         result.append({
         "coins": 0,
         "gems": [],
-        "art": []
+        "art": [],
+        "items": []
         })
         print("2")
         #coin gen
@@ -62,10 +63,18 @@ def generateLoot(settings=defaultLootRequest):
         itemMagicalnessRoll = roll()
         newItems = []
         magicalnessQ = ItemMagicChance.query.filter(ItemMagicChance.minPercentage <= itemMagicalnessRoll, ItemMagicChance.maxPercentage >= itemMagicalnessRoll).first()
-        for eachNewItem in range(0, roll(magicalnessQ.result)):
+        amountOfNewItems = roll(magicalnessQ.result)
+        for eachNewItem in range(0, amountOfNewItems):
             newItems = newItems + [{
                 "magicalness": magicalnessQ.magicalness
             }]
+        if magicalnessQ.magicalness=="mundane":
+            for eachNewItem in range(0, amountOfNewItems):
+                mundaneRoll = roll()
+                mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll, MundaneItem.itemClass == "init",
+                                                            MundaneItem.maxPercentage >= mundaneRoll).first()
+                #use class to roll again for specific item and add that to the item dict
 
+        result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
         hoardNumber= hoardNumber + 1
     return result
