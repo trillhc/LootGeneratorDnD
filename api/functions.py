@@ -73,7 +73,13 @@ def generateLoot(settings=defaultLootRequest):
                 mundaneRoll = roll()
                 mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll, MundaneItem.itemClass == "init",
                                                             MundaneItem.maxPercentage >= mundaneRoll).first()
-                #use class to roll again for specific item and add that to the item dict
+                #use class to roll again for specific item and add that to the item dict (8 items)
+                if mundaneQ.result == "alchemical":
+                    mundaneAlchemical = roll()
+                    mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneAlchemical, MundaneItem.itemClass == "alchemical",
+                                                            MundaneItem.maxPercentage >= mundaneAlchemical).first()
+                    newItems[eachNewItem]["name"] = mundaneQ.itemName          
+                               
 
         result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
         hoardNumber= hoardNumber + 1
