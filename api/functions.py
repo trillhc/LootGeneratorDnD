@@ -1,5 +1,6 @@
 import random
-from api.models import db, CoinGen, ArtGemChance, ItemTypeTable, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
+from api.models import db, ItemMagicChance, CoinGen, ArtGemChance, ItemTypeTable, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
+
 from api.constants import *
 
 def roll(input="1d100"):
@@ -15,38 +16,56 @@ def roll(input="1d100"):
 
 def generateLoot(settings=defaultLootRequest):
     result = []
-    hoardNumber = 1
+    hoardNumber = 0
     for eachHoard in settings["hoards"]:
-        result[hoardNumber] = {
+        print("1")
+        result.append({
         "coins": 0,
         "gems": [],
         "art": []
-        }
+        })
+        print("2")
         #coin gen
         coinRoll = roll()
+        print("5")
         coinQ = CoinGen.query.filter(CoinGen.minPercentage <= coinRoll, CoinGen.maxPercentage >= coinRoll,
                                  CoinGen.level == eachHoard["level"]).first()
+        print("4")
         parse = coinQ.result.split("x")
-        totalCoins = roll(parse[0])*parse[1]*eachHoard["coins"]
-        result[hoardNumber]["coins"] = result["coins"] + totalCoins
+        totalCoins = roll(parse[0])*int(parse[1])*int(eachHoard["coins"])
+        result[hoardNumber]["coins"] = result[hoardNumber]["coins"] + totalCoins
+
         #art and gem generation and value
         chanceRoll = roll()
         chanceQ = ArtGemChance.query.filter(ArtGemChance.minPercentage <= chanceRoll, ArtGemChance.maxPercentage >= chanceRoll,
-                                 ArtGemChance.level == eachHoard["level"]).first()
+                                 ArtGemChance.encounterLevel == eachHoard["level"]).first()
         if chanceQ.artOrGem=="art":
             amountOfNewArt = roll(chanceQ.result)
             newArt = []
             for eachNewArt in range(0,amountOfNewArt):
                 r = roll()
                 q = ItemArtTable.query.filter(ItemArtTable.minPercentage <= r, ItemArtTable.maxPercentage >= r).first()
-                newArt = newArt + [q.result]
-            result["art"] = result["art"] + newArt
+                artParse = q.result.split("x")
+                newArt = newArt + [roll(artParse[0])*int(artParse[1])]
+            result[hoardNumber]["art"] = result[hoardNumber]["art"] + newArt
         if chanceQ.artOrGem=="gem":
             amountOfNewGems = roll(chanceQ.result)
             newGems = []
             for eachNewArt in range(0,amountOfNewGems):
                 r = roll()
                 q = ItemGemTable.query.filter(ItemGemTable.minPercentage <= r, ItemGemTable.maxPercentage >= r).first()
-                newGems = newGems + [q.result]
-            result["gems"] = result["gems"] + newGems
+                gemParse = q.result.split("x")
+                newGems = newGems + [roll(gemParse[0])*int(gemParse[1])]
+            result[hoardNumber]["gems"] = result[hoardNumber]["gems"] + newGems
+
+        #determine amount of mundane,minor,medium,major itmes
+        itemMagicalnessRoll = roll()
+        newItems = []
+        magicalnessQ = ItemMagicChance.query.filter(ItemMagicChance.minPercentage <= itemMagicalnessRoll, ItemMagicChance.maxPercentage >= itemMagicalnessRoll).first()
+        for eachNewItem in range(0, roll(magicalnessQ.result)):
+            newItems = newItems + [{
+                "magicalness": magicalnessQ.magicalness
+            }]
+
+        hoardNumber= hoardNumber + 1
     return result
