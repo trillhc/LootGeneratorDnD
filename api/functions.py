@@ -81,10 +81,33 @@ def generateLoot(settings=defaultLootRequest):
                         print(mundaneQ.result)
                         loops = loops + 1
                     newItems[eachNewItem]["name"] = mundaneQ.itemName
-
+            else:
+                for eachNewItem in range(0, amountOfNewItems):
+                        minorRoll = roll()
+                        minorQ = MinorItem.query.filter(MinorItem.minPercentage <= minorRoll, MinorItem.itemClass == "init",
+                                                                    MinorItem.maxPercentage >= minorRoll).first()
+                        loops = 0
+                        print(minorQ.result)
+                        while minorQ.supercategory == True and loops < 20:
+                            print(str(loops))
+                            minorCat = roll()
+                            minorQ = MinorItem.query.filter(MinorItem.minPercentage <= minorCat, MinorItem.itemClass == minorQ.result,
+                                                                    MinorItem.maxPercentage >= minorCat).first()
+                            print(minorQ.result)
+                            loops = loops + 1
+                        newItems[eachNewItem]["name"] = minorQ.itemName
+                        if ItemTypeTable(result = scroll):
+                            for eachNewScroll in range(0, amountOfNewScrolls):
+                                scrolltype = roll()   # should be either arcane or divine
+                                    if roll() <= 71 : 
+                                        scrolltype = "divine"
+                                    else 
+                                        scrolltype = "arcane"
 
             result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
         except Exception as e:
             print(str(e))
         hoardNumber = hoardNumber + 1
+
+    
     return result

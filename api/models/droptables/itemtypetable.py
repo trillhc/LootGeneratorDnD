@@ -3,11 +3,14 @@ from ..base import db
 
 
 class ItemTypeTable(Mixin, db.Model):
-    # This table is used to determine types (armor/shield and melee/ranged)
+    # This table is the god table, used to generate type of magical items
     __tablename__ = "itemtype"
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    typeItem = db.Column(db.String)
-    minPercentage = db.Column(db.Integer)
-    maxPercentage = db.Column(db.Integer)
+    minorMinPercentage = db.Column(db.Integer)
+    minorMaxPercentage = db.Column(db.Integer)
+    mediumMinPercentage = db.Column(db.Integer)
+    mediumMaxPercentage = db.Column(db.Integer)
+    majorMinPercentage = db.Column(db.Integer)
+    majorMaxPercentage = db.Column(db.Integer)
     result = db.Column(db.String)
     
