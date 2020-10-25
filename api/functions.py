@@ -1,6 +1,6 @@
 import random
 from api.models import db, ItemMagicChance, CoinGen, ArtGemChance, ItemTypeTable, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
-
+from  sqlalchemy.sql.expression import func, select
 from api.constants import *
 
 def roll(input="1d100"):
@@ -76,14 +76,15 @@ def generateLoot(settings=defaultLootRequest):
                     while mundaneQ.supercategory == True and loops < 20:
                         print(str(loops))
                         mundaneCat = roll()
-                        mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneCat, MundaneItem.itemClass == mundaneQ.result,
-                                                                MundaneItem.maxPercentage >= mundaneCat).first()
-                        print(mundaneQ.result)
+                        mundaneQ = MundaneItem.query.filter(MundaneItem.itemClass == mundaneQ.result).order_by(func.random()).limit(1).first()
+                        print(mundaneQ.itemName)
                         loops = loops + 1
                     newItems[eachNewItem]["name"] = mundaneQ.itemName
+                
 
 
             result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
+
         except Exception as e:
             print(str(e))
         hoardNumber = hoardNumber + 1
