@@ -45,9 +45,6 @@ def SheetToDatabase():
     print("Finished Loading To Database")
     return(True)
 
-    #print(wks.sheet1.get('A1'))
-    #values_list = wks.sheet1.row_values(1)
-    #print(values_list)
-    #url1 = "https://spreadsheets.google.com/feeds/cells/" + key + "/od6/public/values?alt=json"
-    #url2 = "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json"
 
+#gem chance test sheet
+#https://docs.google.com/spreadsheets/d/1A42jQEc6LetoWlX7QkPQtFegPl4VKwas1eKtHTIcTUQ/edit#gid=0
