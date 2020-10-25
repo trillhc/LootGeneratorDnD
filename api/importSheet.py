@@ -25,12 +25,10 @@ def SheetToDatabase():
                         try:
                             newRow = className()
                             rowInc = 0
+                            newRow.id = idInc
                             for eachCol in allColumns:
                                 try:
-                                    if eachCol != "id":
-                                        setattr(newRow, eachCol, eachRow[rowInc])
-                                    else:
-                                        setattr(newRow, eachCol, idInc)
+                                    setattr(newRow, eachCol, eachRow[rowInc])
                                 except Exception as e:
                                     print(str(e))
                                     setattr(newRow, eachCol, None)
