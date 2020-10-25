@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from api.functions import generateLoot
+from api.importSheet import SheetToDatabase
 from api.core import create_response, serialize_list, logger
 from sqlalchemy import inspect
 
@@ -8,7 +9,8 @@ main = Blueprint("main", __name__)  # initialize blueprint
 
 @main.route("/test", methods=["GET"])
 def test():
-    dothis = generateLoot()
+    #dothis = generateLoot()
+    dothis = SheetToDatabase()
     return create_response(data={"output": dothis})
 
 
