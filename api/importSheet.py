@@ -10,10 +10,12 @@ def SheetToDatabase():
 
     for eachSheet, eachKey in allKeys.items():
         try:
+            print("Loading Spreadsheet "+ eachSheet)
             wks = gc.open_by_key(eachKey)
             worksheetList = wks.worksheets()
             for eachWorksheet in worksheetList:
                 try:
+                    print("Loading Worksheet " + eachWorksheet.title)
                     className = globals()[eachWorksheet.title]
                     allRows = eachWorksheet.get_all_values()
                     allColumns = allRows[0]
@@ -42,6 +44,7 @@ def SheetToDatabase():
                     print(str(e))
         except Exception as e:
             print(str(e))
+    print("Finished Loading To Database")
     return(True)
 
     #print(wks.sheet1.get('A1'))
