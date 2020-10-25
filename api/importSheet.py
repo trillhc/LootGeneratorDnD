@@ -14,15 +14,14 @@ def SheetToDatabase():
             worksheetList = wks.worksheets()
             for eachWorksheet in worksheetList:
                 try:
-                    tableName = eachWorksheet.title
-                    x = globals()[tableName]
+                    className = globals()[eachWorksheet.title]
                     allRows = eachWorksheet.get_all_values()
                     allColumns = allRows[0]
                     allRows = allRows[1:]
                     idInc = 1
                     for eachRow in allRows:
                         try:
-                            newRow = x()
+                            newRow = className()
                             rowInc = 0
                             for eachCol in allColumns:
                                 try:
