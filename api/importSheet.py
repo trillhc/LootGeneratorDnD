@@ -28,10 +28,10 @@ def SheetToDatabase():
                             newRow.id = idInc
                             for eachCol in allColumns:
                                 try:
-                                    setattr(newRow, eachCol, eachRow[rowInc])
+                                    if eachRow[rowInc] != '':
+                                        setattr(newRow, eachCol, eachRow[rowInc])
                                 except Exception as e:
                                     print(str(e))
-                                    setattr(newRow, eachCol, None)
                                 rowInc = rowInc + 1
                             db.session.add(newRow)
                             idInc = idInc + 1
