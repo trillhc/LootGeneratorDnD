@@ -10,29 +10,28 @@ def SheetToDatabase():
 
     for eachSheet, eachKey in allKeys.items():
         try:
+            print("Loading Spreadsheet "+ eachSheet)
             wks = gc.open_by_key(eachKey)
             worksheetList = wks.worksheets()
             for eachWorksheet in worksheetList:
                 try:
-                    tableName = eachWorksheet.title
-                    x = globals()[tableName]
-                    list_of_lists = eachWorksheet.get_all_values()
-                    allColumns = list_of_lists[0]
-                    allRows = list_of_lists[1:]
+                    print("Loading Worksheet " + eachWorksheet.title)
+                    className = globals()[eachWorksheet.title]
+                    allRows = eachWorksheet.get_all_values()
+                    allColumns = allRows[0]
+                    allRows = allRows[1:]
                     idInc = 1
                     for eachRow in allRows:
                         try:
-                            newRow = x()
+                            newRow = className()
                             rowInc = 0
+                            newRow.id = idInc
                             for eachCol in allColumns:
                                 try:
-                                    if eachCol != "id":
+                                    if eachRow[rowInc] != '':
                                         setattr(newRow, eachCol, eachRow[rowInc])
-                                    else:
-                                        setattr(newRow, eachCol, idInc)
                                 except Exception as e:
                                     print(str(e))
-                                    setattr(newRow, eachCol, None)
                                 rowInc = rowInc + 1
                             db.session.add(newRow)
                             idInc = idInc + 1
@@ -43,11 +42,9 @@ def SheetToDatabase():
                     print(str(e))
         except Exception as e:
             print(str(e))
+    print("Finished Loading To Database")
     return(True)
 
-    #print(wks.sheet1.get('A1'))
-    #values_list = wks.sheet1.row_values(1)
-    #print(values_list)
-    #url1 = "https://spreadsheets.google.com/feeds/cells/" + key + "/od6/public/values?alt=json"
-    #url2 = "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json"
 
+#gem chance test sheet
+#https://docs.google.com/spreadsheets/d/1A42jQEc6LetoWlX7QkPQtFegPl4VKwas1eKtHTIcTUQ/edit#gid=0
