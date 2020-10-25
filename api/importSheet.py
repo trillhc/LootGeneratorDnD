@@ -16,9 +16,9 @@ def SheetToDatabase():
                 try:
                     tableName = eachWorksheet.title
                     x = globals()[tableName]
-                    list_of_lists = eachWorksheet.get_all_values()
-                    allColumns = list_of_lists[0]
-                    allRows = list_of_lists[1:]
+                    allRows = eachWorksheet.get_all_values()
+                    allColumns = allRows[0]
+                    allRows = allRows[1:]
                     idInc = 1
                     for eachRow in allRows:
                         try:
