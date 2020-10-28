@@ -1,9 +1,11 @@
 import simplejson as json
 from sheetKeys import allKeys
 import gspread
-from api.models import db, ItemMagicChance, CoinGen, ArtGemChance, ItemTypeTable, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
-from  sqlalchemy.sql.expression import func, select
+from api.models import db, ItemMagicChance, CoinGen, ArtGemChance, ItemMagicGod, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
+#from api.models import *
 from api.constants import *
+
+
 def SheetToDatabase():
     gc = gspread.service_account()
 
@@ -23,9 +25,9 @@ def SheetToDatabase():
                     idInc = 1
                     for eachRow in allRows:
                         try:
-                            newRow = className()
+                            newRow = className(id=idInc)
                             rowInc = 0
-                            newRow.id = idInc
+                            #newRow.id = idInc
                             for eachCol in allColumns:
                                 try:
                                     if eachRow[rowInc] != '':

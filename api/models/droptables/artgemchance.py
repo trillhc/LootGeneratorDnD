@@ -11,5 +11,5 @@ class ArtGemChance(Mixin, db.Model):
     minPercentage = db.Column(db.Integer, nullable=False)
     maxPercentage = db.Column(db.Integer, nullable=False)
     result = db.Column(db.String, nullable=False)
-    artOrGem = db.Column(db.String, nullable=False)
+    artOrGem = db.Column(db.String)
 
