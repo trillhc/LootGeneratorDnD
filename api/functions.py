@@ -1,5 +1,5 @@
 import random
-from api.models import db, ItemMagicChance, CoinGen, ArtGemChance, ItemTypeTable, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
+from api.models import db, EnchantBase, SpecialAbility, ItemMagicChance, SpecificItem, EnchantableItem, CoinGen, ArtGemChance, ItemMagicGod, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
 from  sqlalchemy.sql.expression import func, select
 from api.constants import *
 
@@ -76,25 +76,40 @@ def generateLoot(settings=defaultLootRequest):
                     while mundaneQ.supercategory == True and loops < 20:
                         print(str(loops))
                         mundaneCat = roll()
+                        #broken
                         mundaneQ = MundaneItem.query.filter(MundaneItem.itemClass == mundaneQ.result).order_by(func.random()).limit(1).first()
                         print(mundaneQ.itemName)
                         loops = loops + 1
                     newItems[eachNewItem]["name"] = mundaneQ.itemName
             else:
                 for eachNewItem in range(0, amountOfNewItems):
-                        minorRoll = roll()
-                        minorQ = MinorItem.query.filter(MinorItem.minPercentage <= minorRoll, MinorItem.itemClass == "init",
-                                                                    MinorItem.maxPercentage >= minorRoll).first()
-                        loops = 0
-                        print(minorQ.result)
-                        while minorQ.supercategory == True and loops < 20:
-                            print(str(loops))
-                            minorCat = roll()
-                            minorQ = MinorItem.query.filter(MinorItem.minPercentage <= minorCat, MinorItem.itemClass == minorQ.result,
-                                                                    MinorItem.maxPercentage >= minorCat).first()
-                            print(minorQ.result)
-                            loops = loops + 1
-                        newItems[eachNewItem]["name"] = minorQ.itemName
+                        godRoll = roll()
+                        godQ = ItemMagicGod.query.filter(getattr(ItemMagicGod, magicalnessQ.magicalness+"MinPercentage") <= godRoll,
+                                                                    getattr(ItemMagicGod, magicalnessQ.magicalness+"MaxPercentage") >= godRoll).first()
+                        if godQ.result=="weapon":
+                            weaponRoll = roll()
+                            weaponQ = EnchantableItem.query.filter(
+                                getattr(EnchantableItem, magicalnessQ.magicalness + "MinPercentage") <= weaponRoll,
+                                getattr(EnchantableItem, magicalnessQ.magicalness + "MaxPercentage") >= weaponRoll,
+                                EnchantableItem.category=="weapon").first()
+                            if weaponQ.result=="specific":
+                                weaponQ = SpecificItem.query.filter(
+                                    getattr(SpecificItem, magicalnessQ.magicalness + "MinPercentage") <= weaponRoll,
+                                    getattr(SpecificItem, magicalnessQ.magicalness + "MaxPercentage") >= weaponRoll,
+                                    SpecificItem.category == "weapon").first()
+                            weapontypeRoll = roll()
+                            weapontypeQ = EnchantBase.query.filter(EnchantBase.minPercentage <= weapontypeRoll,
+                                                                   EnchantBase.category=="weapontype",
+                                                                   EnchantBase.maxPercentage >= weapontypeRoll).first()
+                            weapontypeQ = EnchantBase.query.filter(EnchantBase.minPercentage <= weapontypeRoll,
+                                                                   EnchantBase.category=="weapontype",
+                                                                   EnchantBase.maxPercentage >= weapontypeRoll).first()
+                            if weaponQ.result == "specific":
+                                pass
+                            newItems[eachNewItem]["name"] = weaponQ.name
+                            newItems[eachNewItem]["price"] = weaponQ.price
+
+                        '''
                         if ItemTypeTable(result = scroll):
                             for eachNewScroll in range(0, amountOfNewScrolls):
                                 scrolltype = roll()   # should be either arcane or divine
@@ -102,6 +117,7 @@ def generateLoot(settings=defaultLootRequest):
                                         scrolltype = "divine"
                                     else 
                                         scrolltype = "arcane"
+                        '''
 
             result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
 

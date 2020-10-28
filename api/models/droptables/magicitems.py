@@ -3,7 +3,7 @@ from ..base import db
 
 
 class ItemTypeTable(Mixin, db.Model):
-    # This table is the god table, used to generate type of magical items
+
     __tablename__ = "itemtype"
     id = db.Column(db.Integer, unique=True, primary_key=True)
     supercatagory = db.Column(db.Boolean)
