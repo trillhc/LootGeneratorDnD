@@ -2,7 +2,7 @@ from api.core import Mixin
 from ..base import db
 
 
-class potionTable(Mixin, db.Model):
+class PotionTable(Mixin, db.Model):
     __tablename__ = "potiontable"
 # For Potions, Oils, Consumable Non-Spell Trigger
     id = db.Column(db.Integer, unique=True, primary_key=True)

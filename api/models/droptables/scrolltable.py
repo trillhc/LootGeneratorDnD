@@ -2,7 +2,7 @@ from api.core import Mixin
 from ..base import db
 
 
-class scrollTable(Mixin, db.Model):
+class ScrollTable(Mixin, db.Model):
     __tablename__ = "scrolltable"
 # For Scrolls, or other One-Time Use Spell Trigger Items
     id = db.Column(db.Integer, unique=True, primary_key=True)

@@ -9,8 +9,7 @@ main = Blueprint("main", __name__)  # initialize blueprint
 
 @main.route("/test", methods=["GET"])
 def test():
-    #dothis = generateLoot()
-    dothis = SheetToDatabase()
+    dothis = generateLoot()
     return create_response(data={"output": dothis})
 
 

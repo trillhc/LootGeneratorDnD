@@ -17,6 +17,9 @@ from .droptables.coinGen import CoinGen
 from .droptables.enchantbase import EnchantBase
 from .droptables.itemtypetable import ItemTypeTable
 from .droptables.specificitem import SpecificItem
+from .droptables.potionTable import PotionTable
+from .droptables.wonderousitem import WonderousItemTable
+from .droptables.scrolltable import ScrollTable
 
 from .base import db
 
