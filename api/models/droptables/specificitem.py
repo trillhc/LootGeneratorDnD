@@ -16,5 +16,5 @@ class SpecificItem(Mixin, db.Model):
     price = db.Column(db.Integer)
     name = db.Column(db.String)
     magicalness = db.Column(db.String)
-    #weapon, armor, sheild or wonderouse
+    #weapon, armor, sheild or wonderous
     category = db.Column(db.String)
