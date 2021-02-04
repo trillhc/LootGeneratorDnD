@@ -13,5 +13,6 @@ class MagicItemTable(Mixin, db.Model):
     majorMinPercentage  = db.Column(db.Integer)
     majorMaxPercentage = db.Column(db.Integer)
     enchantmentPotency = db.Column(db.Integer)
-    result = db.Column(db.String) 
+    result = db.Column(db.String)
+    itemType = db.Column(db.String) 
     itemCost = db.Column(db.Integer)
