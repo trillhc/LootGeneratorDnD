@@ -15,6 +15,9 @@ from .droptables.itemgeneration.armortable import ArmorGeneration
 from .droptables.itemgeneration.weapontable import WeaponTable
 from .droptables.coinGen import CoinGen
 from .droptables.enchantbase import EnchantBase
+from .droptables.itemtypetable import ItemTypeTable
+from .droptables.specificitem import SpecificItem
+
 from .base import db
 
 #not used

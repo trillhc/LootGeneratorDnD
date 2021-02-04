@@ -6,9 +6,7 @@ class ItemTypeTable(Mixin, db.Model):
 
     __tablename__ = "itemtype"
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    supercatagory = db.Column(db.Boolean)
-    itemName = db.Column(db.String) 
-    itemMagicalness = db.Column(db.String)   # minor, medium, or major
+    itemName = db.Column(db.String)
     itemEnchantType = db.Column(db.String)   # does the enchant belong on weapon, armor, shield, etc?
     minorMinPercentage = db.Column(db.Integer)
     minorMaxPercebtage = db.Column(db.Integer)
