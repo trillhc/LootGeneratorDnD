@@ -27,36 +27,44 @@ def generateLoot(settings=defaultLootRequest):
             "items": []
             })
             #coin gen
-            coinRoll = roll()
-            coinQ = CoinGen.query.filter(CoinGen.minPercentage <= coinRoll, CoinGen.maxPercentage >= coinRoll,
-                                     CoinGen.level == eachHoard["level"]).first()
-            parse = coinQ.result.split("x")
-            totalCoins = roll(parse[0])*int(parse[1])*int(eachHoard["coins"])
-            result[hoardNumber]["coins"] = result[hoardNumber]["coins"] + totalCoins
-
+            try:
+                coinRoll = roll()
+                coinQ = CoinGen.query.filter(CoinGen.minPercentage <= coinRoll, CoinGen.maxPercentage >= coinRoll,
+                                         CoinGen.level == eachHoard["level"]).first()
+                totalCoins = 0
+                if coinQ.result != "0":
+                    parse = coinQ.result.split("x")
+                    totalCoins = roll(parse[0])*int(parse[1])*int(eachHoard["coins"])
+                    result[hoardNumber]["coins"] = result[hoardNumber]["coins"] + totalCoins
+            except Exception as e:
+                print("Coin Gen Error")
+                print(str(e))
             #art and gem generation and value
-            chanceRoll = roll()
-            chanceQ = ArtGemChance.query.filter(ArtGemChance.minPercentage <= chanceRoll, ArtGemChance.maxPercentage >= chanceRoll,
-                                     ArtGemChance.encounterLevel == eachHoard["level"]).first()
-            if chanceQ.artOrGem=="art":
-                amountOfNewArt = roll(chanceQ.result)
-                newArt = []
-                for eachNewArt in range(0,amountOfNewArt):
-                    r = roll()
-                    q = ItemArtTable.query.filter(ItemArtTable.minPercentage <= r, ItemArtTable.maxPercentage >= r).first()
-                    artParse = q.result.split("x")
-                    newArt = newArt + [roll(artParse[0])*int(artParse[1])]
-                result[hoardNumber]["art"] = result[hoardNumber]["art"] + newArt
-            if chanceQ.artOrGem=="gem":
-                amountOfNewGems = roll(chanceQ.result)
-                newGems = []
-                for eachNewArt in range(0,amountOfNewGems):
-                    r = roll()
-                    q = ItemGemTable.query.filter(ItemGemTable.minPercentage <= r, ItemGemTable.maxPercentage >= r).first()
-                    gemParse = q.result.split("x")
-                    newGems = newGems + [roll(gemParse[0])*int(gemParse[1])]
-                result[hoardNumber]["gems"] = result[hoardNumber]["gems"] + newGems
-
+            try:
+                chanceRoll = roll()
+                chanceQ = ArtGemChance.query.filter(ArtGemChance.minPercentage <= chanceRoll, ArtGemChance.maxPercentage >= chanceRoll,
+                                         ArtGemChance.encounterLevel == eachHoard["level"]).first()
+                if chanceQ.artOrGem=="art":
+                    amountOfNewArt = roll(chanceQ.result)
+                    newArt = []
+                    for eachNewArt in range(0,amountOfNewArt):
+                        r = roll()
+                        q = ItemArtTable.query.filter(ItemArtTable.minPercentage <= r, ItemArtTable.maxPercentage >= r).first()
+                        artParse = q.result.split("x")
+                        newArt = newArt + [roll(artParse[0])*int(artParse[1])]
+                    result[hoardNumber]["art"] = result[hoardNumber]["art"] + newArt
+                if chanceQ.artOrGem=="gem":
+                    amountOfNewGems = roll(chanceQ.result)
+                    newGems = []
+                    for eachNewArt in range(0,amountOfNewGems):
+                        r = roll()
+                        q = ItemGemTable.query.filter(ItemGemTable.minPercentage <= r, ItemGemTable.maxPercentage >= r).first()
+                        gemParse = q.result.split("x")
+                        newGems = newGems + [roll(gemParse[0])*int(gemParse[1])]
+                    result[hoardNumber]["gems"] = result[hoardNumber]["gems"] + newGems
+            except Exception as e:
+                print("Art or Gem Error")
+                print(str(e))
             #determine amount of mundane,minor,medium,major itmes
             itemMagicalnessRoll = roll()
             newItems = []
@@ -82,6 +90,8 @@ def generateLoot(settings=defaultLootRequest):
                         loops = loops + 1
                     newItems[eachNewItem]["name"] = mundaneQ.itemName
             else:
+                pass
+                '''
                 for eachNewItem in range(0, amountOfNewItems):
                         godRoll = roll()
                         godQ = ItemMagicGod.query.filter(getattr(ItemMagicGod, magicalnessQ.magicalness+"MinPercentage") <= godRoll,
@@ -108,17 +118,7 @@ def generateLoot(settings=defaultLootRequest):
                                 pass
                             newItems[eachNewItem]["name"] = weaponQ.name
                             newItems[eachNewItem]["price"] = weaponQ.price
-
-                        '''
-                        if ItemTypeTable(result = scroll):
-                            for eachNewScroll in range(0, amountOfNewScrolls):
-                                scrolltype = roll()   # should be either arcane or divine
-                                    if roll() <= 71 : 
-                                        scrolltype = "divine"
-                                    else 
-                                        scrolltype = "arcane"
-                        '''
-
+                '''
             result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
 
         except Exception as e:
@@ -127,3 +127,14 @@ def generateLoot(settings=defaultLootRequest):
 
     
     return result
+
+
+'''
+if ItemTypeTable(result = scroll):
+    for eachNewScroll in range(0, amountOfNewScrolls):
+        scrolltype = roll()   # should be either arcane or divine
+            if roll() <= 71 : 
+                scrolltype = "divine"
+            else 
+                scrolltype = "arcane"
+'''
