@@ -23,7 +23,8 @@ from .droptables.scrolltable import ScrollTable
 
 from .base import db
 
-#not used
-__all__ = ["Email", "Person", "db"]
+__all__ = ["Email", "Person", "db", "CoinGen", "ItemMagicGod", "ItemArtTable", "EnchantBase", "ItemGemTable", "ArtGemChance",
+           "SpecialAbility", "SpecificItem", "ItemMagicChance", "EnchantableItem", "MagicItemTable", "MundaneItem", "ArmorGeneration",
+           "WeaponTable", "ItemTypeTable", "PotionTable", "WonderousItemTable", "ScrollTable"]
 
 # You must import all of the new Models you create to this page

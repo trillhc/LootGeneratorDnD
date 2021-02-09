@@ -2,14 +2,14 @@ defaultLootRequest = {
     "hoards": [
 {
     "quantity":      "3",
-    "level":	"4",
+    "level":	"10",
     "coins":	"1",
     "valuables":	"1",
     "items":	"1",
 },
 {
     "quantity": "5",
-    "level": "3",
+    "level": "10",
     "coins": "1",
     "valuables": "1",
     "items": "1",
