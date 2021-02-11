@@ -1,8 +1,7 @@
 import simplejson as json
 from sheetKeys import allKeys
 import gspread
-from api.models import db, WonderousItemTable, ScrollTable, PotionTable, SpecificItem, ItemTypeTable, ItemMagicChance, CoinGen, ArtGemChance, ItemMagicGod, ItemGemTable, MundaneItem, ArmorGeneration, MagicItemTable, ItemArtTable
-#from api.models import *
+from api.models import *
 from api.constants import *
 
 
