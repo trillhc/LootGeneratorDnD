@@ -15,7 +15,7 @@ def roll(input="1d100"):
     while numberOfDice>0:
         output = output + random.randint(1,maxRoll)
         numberOfDice = numberOfDice - 1
-    print("rolled "+str(output))
+    #print("rolled "+str(output))
     return output
 
 
@@ -73,56 +73,99 @@ def generateLoot(settings=defaultLootRequest):
                     #determine amount of mundane,minor,medium,major itmes
                     itemMagicalnessRoll = roll()
                     newItems = []
-                    magicalnessQ = ItemMagicChance.query.filter(ItemMagicChance.minPercentage <= itemMagicalnessRoll, ItemMagicChance.maxPercentage >= itemMagicalnessRoll).first()
+                    magicalnessQ = ItemMagicChance.query.filter(ItemMagicChance.encounterLevel == settings["hoards"][hoardNumber]["level"],
+                                                                ItemMagicChance.minPercentage <= itemMagicalnessRoll, ItemMagicChance.maxPercentage >= itemMagicalnessRoll).first()
                     amountOfNewItems = roll(magicalnessQ.result)
                     for eachNewItem in range(0, amountOfNewItems):
                         newItems = newItems + [{
                             "magicalness": magicalnessQ.magicalness
                         }]
                         if magicalnessQ.magicalness=="mundane":
-                            for eachNewItem in range(0, amountOfNewItems):
-                                mundaneRoll = roll()
-                                mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll, MundaneItem.itemClass == "init",
-                                                                            MundaneItem.maxPercentage >= mundaneRoll).first()
-                                loops = 0
-                                print(mundaneQ.result)
-                                while mundaneQ.supercategory == True and loops < 20:
-                                    print(str(loops))
-                                    mundaneCat = roll()
-                                    #mundaneQ = MundaneItem.query.filter(MundaneItem.itemClass == mundaneQ.result).order_by(func.random()).limit(1).first()
-                                    mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll,
-                                                                        MundaneItem.itemClass == mundaneQ.result,
+                            #for eachNewItem in range(0, amountOfNewItems):
+                            mundaneRoll = roll()
+                            mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll, MundaneItem.itemClass == "init",
                                                                         MundaneItem.maxPercentage >= mundaneRoll).first()
-                                    print(mundaneQ.itemName)
-                                    loops = loops + 1
-                                newItems[eachNewItem]["name"] = mundaneQ.itemName
+                            loops = 0
+                            print(mundaneQ.result)
+                            while mundaneQ.superCategory == True and loops < 20:
+                                print(str(loops))
+                                mundaneCat = roll()
+                                #mundaneQ = MundaneItem.query.filter(MundaneItem.itemClass == mundaneQ.result).order_by(func.random()).limit(1).first()
+                                mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneCat,
+                                                                    MundaneItem.itemClass == mundaneQ.result,
+                                                                    MundaneItem.maxPercentage >= mundaneCat).first()
+                                print(mundaneQ.itemName)
+                                loops = loops + 1
+                            newItems[eachNewItem]["name"] = mundaneQ.itemName
+                            newItems[eachNewItem]["quantity"] = roll(mundaneQ.result)
                         else:
-                            for eachNewItem in range(0, amountOfNewItems):
-                                    godRoll = roll()
-                                    godQ = ItemMagicGod.query.filter(getattr(ItemMagicGod, magicalnessQ.magicalness+"MinPercentage") <= godRoll,
-                                                                                getattr(ItemMagicGod, magicalnessQ.magicalness+"MaxPercentage") >= godRoll).first()
-                                    if godQ.result=="placeholder":
-                                        weaponRoll = roll()
-                                        weaponQ = EnchantableItem.query.filter(
-                                            getattr(EnchantableItem, magicalnessQ.magicalness + "MinPercentage") <= weaponRoll,
-                                            getattr(EnchantableItem, magicalnessQ.magicalness + "MaxPercentage") >= weaponRoll,
-                                            EnchantableItem.category=="weapon").first()
-                                        if weaponQ.result=="specific":
-                                            weaponQ = SpecificItem.query.filter(
-                                                getattr(SpecificItem, magicalnessQ.magicalness + "MinPercentage") <= weaponRoll,
-                                                getattr(SpecificItem, magicalnessQ.magicalness + "MaxPercentage") >= weaponRoll,
-                                                SpecificItem.category == "weapon").first()
-                                        weapontypeRoll = roll()
-                                        weapontypeQ = EnchantBase.query.filter(EnchantBase.minPercentage <= weapontypeRoll,
-                                                                               EnchantBase.category=="weapontype",
-                                                                               EnchantBase.maxPercentage >= weapontypeRoll).first()
-                                        weapontypeQ = EnchantBase.query.filter(EnchantBase.minPercentage <= weapontypeRoll,
-                                                                               EnchantBase.category=="weapontype",
-                                                                               EnchantBase.maxPercentage >= weapontypeRoll).first()
-                                        if weaponQ.result == "specific":
-                                            pass
-                                        newItems[eachNewItem]["name"] = weaponQ.name
-                                        newItems[eachNewItem]["price"] = weaponQ.price
+                            #for eachNewItem in range(0, amountOfNewItems):
+                            godRoll = roll()
+                            godQ = ItemMagicGod.query.filter(getattr(ItemMagicGod, magicalnessQ.magicalness+"MinPercentage") <= godRoll,
+                                                                        getattr(ItemMagicGod, magicalnessQ.magicalness+"MaxPercentage") >= godRoll).first()
+                            if godQ.result=="weapon" or godQ.result=="armorShield":
+                                addAbilities = 0
+                                abilityBonus = 0
+                                done = False
+                                itemRoll = roll()
+                                print(godQ.result)
+                                itemQ = EnchantBase.query.filter(
+                                    getattr(EnchantBase, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
+                                    getattr(EnchantBase, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
+                                    EnchantBase.category=="init",
+                                    EnchantBase.type==godQ.result).first()
+                                print(itemQ.result)
+                                while itemQ.result=="specialAbilityRR":
+                                    addAbilities = addAbilities + 1
+                                    itemRoll = roll()
+                                    itemQ = EnchantBase.query.filter(
+                                        getattr(EnchantBase, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
+                                        getattr(EnchantBase, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
+                                        EnchantBase.category == "init",
+                                        EnchantBase.type == godQ.result).first()
+                                if "specific" in itemQ.result:
+                                    specificType = "weapon"
+                                    if godQ.result=="armorShield":
+                                        specificType = itemQ.result.split("specific")[1]
+                                    itemRoll = roll()
+                                    itemQ = SpecificItem.query.filter(
+                                        getattr(SpecificItem, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
+                                        getattr(SpecificItem, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
+                                        SpecificItem.category == specificType).first()
+                                    newItems[eachNewItem]["name"] = itemQ.name
+                                    newItems[eachNewItem]["price"] = itemQ.price
+                                else:
+                                    abilityBonus = itemQ.abilityBonus
+                                    itemType = itemQ.result
+                                    while itemQ.superCategory==True:
+                                        itemRoll = roll()
+                                        itemQ = EnchantBase.query.filter(
+                                            getattr(EnchantBase, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
+                                            getattr(EnchantBase, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
+                                            EnchantBase.category == itemQ.result,
+                                            EnchantBase.type == itemType).first()
+                                    if itemQ.category == "ranged":
+                                        itemType = "ranged"
+                                    loops = 0
+                                    newItems[eachNewItem]["abilities"] = []
+                                    abilityMax = abilityBonus
+                                    while addAbilities > 0 and loops < 5:
+                                        loops = loops + 1
+                                        addAbilities = addAbilities - 1
+                                        abilityRoll = roll()
+                                        abilityQ = ItemTypeTable.query.filter(
+                                            getattr(ItemTypeTable, magicalnessQ.magicalness + "MinPercentage") <= abilityRoll,
+                                            getattr(ItemTypeTable, magicalnessQ.magicalness + "MaxPercentage") >= abilityRoll,
+                                            ItemTypeTable.itemEnchantType==itemType,
+                                        )
+                                        if abilityQ.result=="extraAbility":
+                                            addAbilities = addAbilities + 2
+                                        elif abilityMax+abilityQ.abilityPlus <= 10:
+                                            newItems[eachNewItem]["abilities"] = newItems[eachNewItem]["abilities"] + [abilityQ.result]
+                                            abilityMax = abilityMax + abilityQ.abilityPlus
+                                    newItems[eachNewItem]["name"] = itemQ.name
+                                    newItems[eachNewItem]["price"] = itemQ.price
+                                    newItems[eachNewItem]["abilityBonus"] = abilityBonus
                     result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
 
                 except Exception as e:

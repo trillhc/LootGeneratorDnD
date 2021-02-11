@@ -20,11 +20,12 @@ from .droptables.specificitem import SpecificItem
 from .droptables.potionTable import PotionTable
 from .droptables.wonderousitem import WonderousItemTable
 from .droptables.scrolltable import ScrollTable
+from .droptables.scrollgeneration import ScrollGeneration
 
 from .base import db
 
 __all__ = ["Email", "Person", "db", "CoinGen", "ItemMagicGod", "ItemArtTable", "EnchantBase", "ItemGemTable", "ArtGemChance",
            "SpecialAbility", "SpecificItem", "ItemMagicChance", "EnchantableItem", "MagicItemTable", "MundaneItem", "ArmorGeneration",
-           "WeaponTable", "ItemTypeTable", "PotionTable", "WonderousItemTable", "ScrollTable"]
+           "WeaponTable", "ItemTypeTable", "PotionTable", "WonderousItemTable", "ScrollTable", "ScrollGeneration"]
 
 # You must import all of the new Models you create to this page

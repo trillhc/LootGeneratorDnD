@@ -60,4 +60,3 @@ boilerplate:
 
 https://github.com/tko22/flask-boilerplate
 
-foor

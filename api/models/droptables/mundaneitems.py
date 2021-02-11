@@ -9,7 +9,7 @@ class MundaneItem(Mixin, db.Model):
     itemName = db.Column(db.String)
     #itemClass is "init" for initial roll then "armor" or "tools" ect.
     itemClass = db.Column(db.String)
-    supercategory = db.Column(db.Boolean)
+    superCategory = db.Column(db.Boolean)
     itemCost = db.Column(db.Integer)
     itemCostToCreate = db.Column(db.Integer)
     minPercentage = db.Column(db.Integer, nullable=False)
