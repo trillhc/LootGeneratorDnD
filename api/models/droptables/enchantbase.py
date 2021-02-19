@@ -8,7 +8,7 @@ class EnchantBase(Mixin, db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     category = db.Column(db.String)
     type = db.Column(db.String)
-    superCategory = db.Column(db.String)
+    superCategory = db.Column(db.Boolean)
     minorMinPercentage = db.Column(db.Integer)
     minorMaxPercentage = db.Column(db.Integer)
     mediumMinPercentage = db.Column(db.Integer)

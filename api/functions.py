@@ -86,15 +86,12 @@ def generateLoot(settings=defaultLootRequest):
                             mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneRoll, MundaneItem.itemClass == "init",
                                                                         MundaneItem.maxPercentage >= mundaneRoll).first()
                             loops = 0
-                            print(mundaneQ.result)
                             while mundaneQ.superCategory == True and loops < 20:
-                                print(str(loops))
                                 mundaneCat = roll()
                                 #mundaneQ = MundaneItem.query.filter(MundaneItem.itemClass == mundaneQ.result).order_by(func.random()).limit(1).first()
                                 mundaneQ = MundaneItem.query.filter(MundaneItem.minPercentage <= mundaneCat,
                                                                     MundaneItem.itemClass == mundaneQ.result,
                                                                     MundaneItem.maxPercentage >= mundaneCat).first()
-                                print(mundaneQ.itemName)
                                 loops = loops + 1
                             newItems[eachNewItem]["name"] = mundaneQ.itemName
                             newItems[eachNewItem]["quantity"] = roll(mundaneQ.result)
@@ -106,15 +103,12 @@ def generateLoot(settings=defaultLootRequest):
                             if godQ.result=="weapon" or godQ.result=="armorShield":
                                 addAbilities = 0
                                 abilityBonus = 0
-                                done = False
                                 itemRoll = roll()
-                                print(godQ.result)
                                 itemQ = EnchantBase.query.filter(
                                     getattr(EnchantBase, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
                                     getattr(EnchantBase, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
                                     EnchantBase.category=="init",
                                     EnchantBase.type==godQ.result).first()
-                                print(itemQ.result)
                                 while itemQ.result=="specialAbilityRR":
                                     addAbilities = addAbilities + 1
                                     itemRoll = roll()
@@ -137,12 +131,13 @@ def generateLoot(settings=defaultLootRequest):
                                 else:
                                     abilityBonus = itemQ.abilityBonus
                                     itemType = itemQ.result
-                                    while itemQ.superCategory==True:
+                                    while itemQ.superCategory is True:
                                         itemRoll = roll()
+                                        trying = itemQ.result
                                         itemQ = EnchantBase.query.filter(
                                             getattr(EnchantBase, magicalnessQ.magicalness + "MinPercentage") <= itemRoll,
                                             getattr(EnchantBase, magicalnessQ.magicalness + "MaxPercentage") >= itemRoll,
-                                            EnchantBase.category == itemQ.result,
+                                            EnchantBase.category == trying,
                                             EnchantBase.type == itemType).first()
                                     if itemQ.category == "ranged":
                                         itemType = "ranged"
@@ -157,15 +152,16 @@ def generateLoot(settings=defaultLootRequest):
                                             getattr(ItemTypeTable, magicalnessQ.magicalness + "MinPercentage") <= abilityRoll,
                                             getattr(ItemTypeTable, magicalnessQ.magicalness + "MaxPercentage") >= abilityRoll,
                                             ItemTypeTable.itemEnchantType==itemType,
-                                        )
+                                        ).first()
                                         if abilityQ.result=="extraAbility":
                                             addAbilities = addAbilities + 2
                                         elif abilityMax+abilityQ.abilityPlus <= 10:
                                             newItems[eachNewItem]["abilities"] = newItems[eachNewItem]["abilities"] + [abilityQ.result]
                                             abilityMax = abilityMax + abilityQ.abilityPlus
-                                    newItems[eachNewItem]["name"] = itemQ.name
+                                    newItems[eachNewItem]["name"] = itemQ.result
                                     newItems[eachNewItem]["price"] = itemQ.price
                                     newItems[eachNewItem]["abilityBonus"] = abilityBonus
+                                    newItems[eachNewItem]["type"] = itemType
                     result[hoardNumber]["items"] = result[hoardNumber]["items"] + newItems
 
                 except Exception as e:
