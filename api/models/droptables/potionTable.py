@@ -14,4 +14,4 @@ class PotionTable(Mixin, db.Model):
     majorMaxPercentage = db.Column(db.Integer)
     enchantmentPotency = db.Column(db.Integer)
     result = db.Column(db.String)
-    itemCost = db.Column(db.Integer)
+    price = db.Column(db.Integer)

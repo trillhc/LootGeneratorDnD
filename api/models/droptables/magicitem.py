@@ -15,4 +15,4 @@ class MagicItemTable(Mixin, db.Model):
     enchantmentPotency = db.Column(db.Integer)
     result = db.Column(db.String)
     itemType = db.Column(db.String) 
-    itemCost = db.Column(db.Integer)
+    price = db.Column(db.Integer)

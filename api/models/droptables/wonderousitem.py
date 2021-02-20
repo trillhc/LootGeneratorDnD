@@ -9,5 +9,5 @@ class WonderousItemTable(Mixin, db.Model):
     itemMinPercent = db.Column(db.Integer)
     itemMaxPercent = db.Column(db.Integer)
     result = db.Column(db.String)
-    itemCost = db.Column(db.Integer)
+    price = db.Column(db.Integer)
     itemQuality = db.Column(db.String) # Minor Medium or Major Item

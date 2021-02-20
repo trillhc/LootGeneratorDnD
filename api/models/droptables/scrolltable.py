@@ -9,7 +9,7 @@ class ScrollTable(Mixin, db.Model):
     itemMinPercent = db.Column(db.Integer)
     itemMaxPercent = db.Column(db.Integer)
     result = db.Column(db.String)
-    itemCost = db.Column(db.Integer)
+    price = db.Column(db.Integer)
     spellLevel = db.Column(db.Integer) # Level of Spell
     magicSource = db.Column(db.String) # Arcane or Divine (or neither for Artificers)
         
