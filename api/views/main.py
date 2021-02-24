@@ -13,6 +13,11 @@ def test():
     return create_response(data={"output": dothis})
 
 
+@main.route("/lootgen", methods=["POST"])
+def lootgen():
+    dothis = generateLoot(request.json.get('settings'))
+    return create_response(data={"output": dothis})
+
 # POST request example
 """
 @main.route("/example", methods=["POST"])
@@ -59,7 +64,7 @@ def get_persons():
     return create_response(data={"persons": serialize_list(persons)})
 """
 
-# POST request for /persons
+"""
 @main.route("/persons", methods=["POST"])
 def create_person():
     data = request.get_json()
@@ -85,3 +90,4 @@ def create_person():
     return create_response(
         message=f"Successfully created person {new_person.name} with id: {new_person._id}"
     )
+"""
