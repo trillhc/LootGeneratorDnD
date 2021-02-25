@@ -6,7 +6,7 @@ from api.constants import *
 
 
 def SheetToDatabase():
-    gc = gspread.service_account()
+    gc = gspread.service_account(filename='./service_account.json')
 
 
     for eachSheet, eachKey in allKeys.items():
