@@ -13,34 +13,11 @@ def test():
     return create_response(data={"output": dothis})
 
 
-# POST request example
-"""
-@main.route("/example", methods=["POST"])
-def example():
-    data = request.get_json()
+@main.route("/lootgen", methods=["POST"])
+def lootgen():
+    dothis = generateLoot(request.json.get('settings'))
+    return create_response(data={"output": dothis})
 
-    #logger.info("Data recieved: %s", data)
-    if "name" not in data:
-        msg = "No name provided for person."
-        logger.info(msg)
-        return create_response(status=422, message=msg)
-    if "email" not in data:
-        msg = "No email provided for person."
-        logger.info(msg)
-        return create_response(status=422, message=msg)
-
-    # create SQLAlchemy Objects
-    new_person = Person(name=data["name"])
-    email = Email(email=data["email"])
-    new_person.emails.append(email)
-
-    # commit it to database
-    db.session.add_all([new_person, email])
-    db.session.commit()
-    return create_response(
-        message=f"Successfully created person {new_person.name} with id: {new_person._id}"
-    )
-"""
 
 # function that is called when you visit /
 @main.route("/")
@@ -51,6 +28,7 @@ def index():
     logger.info("Hello World!")
     return "<h1>Hello World!</h1>"
 
+
 """
 # function that is called when you visit /persons
 @main.route("/persons", methods=["GET"])
@@ -59,7 +37,7 @@ def get_persons():
     return create_response(data={"persons": serialize_list(persons)})
 """
 
-# POST request for /persons
+"""
 @main.route("/persons", methods=["POST"])
 def create_person():
     data = request.get_json()
@@ -85,3 +63,4 @@ def create_person():
     return create_response(
         message=f"Successfully created person {new_person.name} with id: {new_person._id}"
     )
+"""

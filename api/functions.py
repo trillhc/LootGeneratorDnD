@@ -215,6 +215,12 @@ def generateLoot(settings=defaultLootRequest):
                                     magicSource = "arcane"
                                 else:
                                     magicSource = "divine"
+                                if magicalnessQ.magicalness == "minor":
+                                    uses = roll("1d3")
+                                elif magicalnessQ.magicalness == "medium":
+                                    uses = roll("1d4")
+                                else:
+                                    uses = roll("1d6")
                                 scrollGenRoll = roll()
                                 scrollGenQ = ScrollGeneration.query.filter(
                                     getattr(ScrollGeneration, magicalnessQ.magicalness + "MinPercentage") <= scrollGenRoll,
@@ -228,6 +234,7 @@ def generateLoot(settings=defaultLootRequest):
                                     ScrollTable.spellLevel == scrollGenQ.spellLevel,
                                 ).first()
                                 newItems[eachNewItem]["name"] = scrollQ.result
+                                newItems[eachNewItem]["amount"] = uses
                                 newItems[eachNewItem]["type"] = "scroll"
                                 newItems[eachNewItem]["spell"] = scrollGenQ.spellLevel
                                 newItems[eachNewItem]["caster"] = scrollGenQ.spellCasterLevel
