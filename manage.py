@@ -2,6 +2,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from api import create_app
 from api.models import db
+from api.importSheet import SheetToDatabase
 
 # sets up the app
 app = create_app()
@@ -24,6 +25,16 @@ def runworker():
 
 
 @manager.command
+def excelDb():
+    """
+    recreates db and imports it from excel
+    """
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+    SheetToDatabase()
+
+@manager.command
 def recreate_db():
     """
     Recreates a database. This should only be used once
@@ -31,6 +42,11 @@ def recreate_db():
     used when you migrate your database.
     """
     db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+@manager.command
+def add_tables():
     db.create_all()
     db.session.commit()
 

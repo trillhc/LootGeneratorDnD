@@ -1,11 +1,20 @@
 defaultLootRequest = {
-"n":"3",
-"level":	"5",
-"coins":	"standard",
-"valuables":	"standard",
-"items":	"standard",
-"hoard_n":	"1",
-"salvage":	"none",
+    "hoards": [
+{
+    "quantity":      "5",
+    "level":	"10",
+    "coins":	"1",
+    "valuables":	"1",
+    "items":	"1",
+},
+{
+    "quantity": "6",
+    "level": "7",
+    "coins": "1",
+    "valuables": "1",
+    "items": "1",
+}
+    ],
 "gem": "1",
 "art":	"1",
 "magic":	"1",
@@ -23,5 +32,5 @@ defaultLootRequest = {
 "minor":	"1",
 "medium":	"1",
 "major":	"1",
-"gp_limit":	"",
+"gp_limit":	"0",
 }
