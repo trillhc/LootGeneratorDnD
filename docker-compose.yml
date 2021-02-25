@@ -12,8 +12,6 @@ services:
       - 5000:5000
     volumes:
       - .:/app
-    depends_on:
-      - postgres
     entrypoint:
       - /app/scripts/docker_script.sh
 
