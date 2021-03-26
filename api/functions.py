@@ -26,12 +26,14 @@ def generateLoot(settings=defaultLootRequest):
             result.append({
                 "coins": 0,
                 "gems": {"list": [],
-                         "total": 0},
+                         "total": 0,
+                         "quantity": 0},
                 "art": {"list": [],
-                        "total": 0},
+                        "total": 0,
+                        "quantity": 0},
                 "items": []
             })
-            for enemy in range(1,int(settings["hoards"][hoardNumber]["quantity"])):
+            for enemy in range(0,int(settings["hoards"][hoardNumber]["quantity"])):
                 try:
                     #coin gen
                     try:
@@ -64,22 +66,20 @@ def generateLoot(settings=defaultLootRequest):
                                 artTotal = artTotal + artValue
                             result[hoardNumber]["art"]["list"] = result[hoardNumber]["art"]["list"] + newArt
                             result[hoardNumber]["art"]["total"] = result[hoardNumber]["art"]["total"] + artTotal
-                            result[hoardNumber]["art"]["quantity"] = amountOfNewArt
+                            result[hoardNumber]["art"]["quantity"] = result[hoardNumber]["art"]["quantity"] + amountOfNewArt
 
                         if chanceQ.artOrGem=="gem":
                             amountOfNewGems = roll(chanceQ.result)
                             newGems = []
-                            gemTotal = 0
                             for eachNewGem in range(0,amountOfNewGems):
                                 r = roll()
                                 q = ItemGemTable.query.filter(ItemGemTable.minPercentage <= r, ItemGemTable.maxPercentage >= r).first()
                                 gemParse = q.result.split("x")
                                 gemValue = roll(gemParse[0])*int(gemParse[1])
                                 newGems = newGems + [gemValue]
-                                gemTotal = gemTotal + gemValue
                             result[hoardNumber]["gems"]["list"] = result[hoardNumber]["gems"]["list"] + newGems
-                            result[hoardNumber]["gems"]["total"] = gemTotal
-                            result[hoardNumber]["gems"]["quantity"] = amountOfNewGems
+                            result[hoardNumber]["gems"]["total"] = result[hoardNumber]["gems"]["total"] + sum(newGems)
+                            result[hoardNumber]["gems"]["quantity"] = result[hoardNumber]["gems"]["quantity"] + len(newGems)
                     except Exception as e:
                         print("Art or Gem Error")
                         print(str(e))
@@ -91,7 +91,8 @@ def generateLoot(settings=defaultLootRequest):
                     amountOfNewItems = roll(magicalnessQ.result)
                     for eachNewItem in range(0, amountOfNewItems):
                         newItems = newItems + [{
-                            "magicalness": magicalnessQ.magicalness
+                            "magicalness": magicalnessQ.magicalness,
+                            "quantity": 1,
                         }]
                         if magicalnessQ.magicalness=="mundane":
                             #for eachNewItem in range(0, amountOfNewItems):
@@ -113,7 +114,6 @@ def generateLoot(settings=defaultLootRequest):
                             godRoll = roll()
                             godQ = ItemMagicGod.query.filter(getattr(ItemMagicGod, magicalnessQ.magicalness+"MinPercentage") <= godRoll,
                                                                         getattr(ItemMagicGod, magicalnessQ.magicalness+"MaxPercentage") >= godRoll).first()
-                            print(godQ.result)
                             if godQ.result=="weapon" or godQ.result=="armorShield":
                                 addAbilities = 0
                                 abilityBonus = 0
@@ -246,6 +246,10 @@ def generateLoot(settings=defaultLootRequest):
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                     print(exc_type, fname, exc_tb.tb_lineno)
+            #result[hoardNumber]["gems"]["total"] = sum(result[hoardNumber]["gems"]["list"])
+            #result[hoardNumber]["gems"]["quantity"] = len(result[hoardNumber]["gems"]["list"])
+            #result[hoardNumber]["art"]["total"] = sum(result[hoardNumber]["art"]["list"])
+            #result[hoardNumber]["art"]["quantity"] = len(result[hoardNumber]["art"]["list"])
             hoardNumber = hoardNumber + 1
 
     
